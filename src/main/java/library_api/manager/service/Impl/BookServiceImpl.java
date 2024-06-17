@@ -35,4 +35,12 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(book);
     }
 
+    @Override
+    public List<Book> createList(List<Book> bookList){
+        List<Book> bookUnique = bookList.stream()
+                .filter(x -> !bookRepository.existsBookByISBN(x.getISBN()))
+                .toList();
+
+        return bookRepository.saveAll(bookUnique);
+    }
 }

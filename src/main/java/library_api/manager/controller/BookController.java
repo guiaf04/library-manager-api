@@ -30,7 +30,7 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    @PostMapping
+    @PostMapping("/addBook")
     public ResponseEntity<Book> create(@RequestBody Book book){
         var bookCreated = bookService.create(book);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -38,5 +38,11 @@ public class BookController {
                 .buildAndExpand(bookCreated.getISBN())
                 .toUri();
         return ResponseEntity.created(location).body(bookCreated);
+    }
+
+    @PostMapping("/addBookList")
+    public ResponseEntity<List<Book>> createList(@RequestBody List<Book> bookList){
+        List<Book> cratedList = bookService.createList(bookList);
+        return ResponseEntity.ok(cratedList);
     }
 }
